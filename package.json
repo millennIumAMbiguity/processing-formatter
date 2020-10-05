@@ -11,37 +11,39 @@
 	],
 	"activationEvents": [
 		"onLanguage:pde",
-        "onCommand:format-processing.format"
+		"onCommand:format-processing.format"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"languages": [
-            {
-                "id": "pde",
-                "aliases": [
-                    "Processing", "processing", "pde"
-                ],
-                "extensions": [
-                    ".pde"
-                ]
-            }
-        ],
-        "commands": [
-            {
-                "command": "format-processing.format",
-                "title": "(Bad) Format Processing Files"
-            }
-        ]
+			{
+				"id": "pde",
+				"aliases": [
+					"Processing",
+					"processing",
+					"pde"
+				],
+				"extensions": [
+					".pde"
+				]
+			}
+		],
+		"commands": [
+			{
+				"command": "format-processing.format",
+				"title": "(Bad) Format Processing Files"
+			}
+		]
 	},
-	"grammars": [{
-		"language": "pde",
-		"scopeName": "source.pde",
-		"path": "./syntaxes/pde.tmLanguage"
-	}],
-	"snippets": [
+	"grammars": [
 		{
 			"language": "pde",
-			"path": "./snippets/snippets.json"
+			"scopeName": "source.pde"
+		}
+	],
+	"snippets": [
+		{
+			"language": "pde"
 		}
 	],
 	"scripts": {
