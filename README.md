@@ -6,6 +6,4 @@ Before | After
 ------------ | -------------
 `if( i==k){} ;` | `if (i == k) {};`
 `int k=i&1;` | `int k = i & 1;`
-```if (i == k &&
-i != 0)
-myFunction();``` | `if (i == k &&`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`i != 0)`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`myFunction();`
+`if (i == k &&`<br>`i != 0)`<br>`myFunction();` | `if (i == k &&`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`i != 0)`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`myFunction();`
