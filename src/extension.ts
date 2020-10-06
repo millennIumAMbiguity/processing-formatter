@@ -81,16 +81,24 @@ export function activate(context: vscode.ExtensionContext) {
                                 edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
                             } else if (lineS[_k+1] === ')') { //no space before ")"
                                 edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
-                            }
-                        } else if (lineS[_k] === ')') {
-                            if (lineS[_k+1] === '{') { //no space before ";"
-                                edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
-                            }
-                        } else if (lineS[_k] === '(') {
-                            if (lineS[_k+1] === ' ') { //no space after "("
-                            edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k+1), line.range.start.translate(0,_k+2))));
-                            }
-                        }
+                            } else if (lineS[_k+1] === '.') { //no space before "."
+                                edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
+                            } 
+                        } else {
+                            if (lineS[_k] === ')') {
+                                if (lineS[_k+1] === '{') { //no space before ";"
+                                    edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
+                                }
+                            } else if (lineS[_k] === '(') {
+                                if (lineS[_k+1] === ' ') { //no space after "("
+                                    edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k+1), line.range.start.translate(0,_k+2))));
+                                }
+                            }  else if (lineS[_k] === '.') { //no space before "."
+                                if (lineS[_k+1] === ' ') { //no space before "."
+                                    edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k+1), line.range.start.translate(0,_k+2))));
+                                }   
+                            }   
+                        } 
 
 
                     } else if (comment){
@@ -146,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function isOpperator(s: string) : boolean {
-    return (s === '=' || s === '<' || s === '>' || s === '&' || s === '!' || s === '|' || s === '%' 
+    return (s === '=' || s === '<' || s === '>' || s === '&' || s === '!' || s === '|' || s === '%' || s === '?' || s === '~' || s === '^' 
     || s === '+' || s === '-' || s === '*' || s === '/');
 }
 

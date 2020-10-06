@@ -2,7 +2,7 @@
 	"name": "processing-formatter",
 	"displayName": "processing-formatter",
 	"description": "a processing formatter",
-	"version": "0.1.0",
+	"version": "0.2.2",
 	"author": "millennIumAMbiguity",
 	"license": "MIT",
 	"repository": {
@@ -17,8 +17,12 @@
 		"vscode": "^1.49.0"
 	},
 	"categories": [
-		"Other"
+		"Formatters"
 	],
+	"keywords": [
+		"pde",
+		"Processing"
+	  ],
 	"activationEvents": [
 		"onLanguage:pde",
 		"onCommand:format-processing.format"
@@ -45,17 +49,7 @@
 			}
 		]
 	},
-	"grammars": [
-		{
-			"language": "pde",
-			"scopeName": "source.pde"
-		}
-	],
-	"snippets": [
-		{
-			"language": "pde"
-		}
-	],
+	
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
