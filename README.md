@@ -6,9 +6,16 @@ See [releases](https://github.com/millennIumAMbiguity/processing-formatter/relea
 
 How to install a VSIX file: [code.visualstudio.com/docs/editor/extension-gallery](https://code.visualstudio.com/docs/editor/extension-gallery#:~:text=Install%20from%20a%20VSIX%23&text=Using%20the%20Install%20from%20VSIX,vsix%20file.)
 
+## Usage
+
 It uses the Formatting API so use the following command for formating:
 * Format Document (`Shift+Alt+F`) - Format the entire active file.
 * Format Selection (`Ctrl+K Ctrl+F`) - Format the selected text.
+
+## Features
+* Handles spaces between operators and brackets.
+* Removes spaces before and after `.`.
+* Handles horizontal spacing.
 
 ## Formatting examples
 
