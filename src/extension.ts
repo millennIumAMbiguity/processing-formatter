@@ -78,11 +78,11 @@ export function activate(context: vscode.ExtensionContext) {
 
                         if (lineS[_k] === ' ') {
                             if (lineS[_k+1] === ';') { //no space before ";"
-                                edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } else if (lineS[_k+1] === ')') { //no space before ")"
-                                edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } else if (lineS[_k+1] === '.') { //no space before "."
-                                edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+1))));
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } 
                         } else {
                             if (lineS[_k] === ')') {
@@ -91,13 +91,40 @@ export function activate(context: vscode.ExtensionContext) {
                                 }
                             } else if (lineS[_k] === '(') {
                                 if (lineS[_k+1] === ' ') { //no space after "("
-                                    edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k+1), line.range.start.translate(0,_k+2))));
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 1)));
                                 }
-                            }  else if (lineS[_k] === '.') { //no space before "."
+                            } else if (lineS[_k] === '.') { //no space before "."
                                 if (lineS[_k+1] === ' ') { //no space before "."
-                                    edit.push(vscode.TextEdit.delete(new vscode.Range(line.range.start.translate(0,_k+1), line.range.start.translate(0,_k+2))));
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 1)));
                                 }   
-                            }   
+                            }
+
+                            if (lineS[_k] !== '-' && lineS[_k+1] !== '-' && lineS[_k] !== '+' && lineS[_k+1] !== '+') { //dont add spaces on ++ and --
+                                if (isOpperator(lineS[_k])) { // spaces before and after opperators. example if (i==0) -> if (i == 0)
+
+                                    if (lineS[_k] === '!') { //for cases as: if (! boolValue) -> if (!boolValue)
+                                        if (lineS[_k+1] === ' ') {
+                                            edit.push(vscode.TextEdit.delete(newRange(line, _k, 1)));
+                                            continue;
+                                        }
+                                    }
+
+                                    var isOpperatorK1 = isOpperator(lineS[_k+1]);
+
+                                    if (!isOpperatorK1 && lineS[_k] === '!') { //for cases as "if (!boolValue)"
+                                        continue;
+                                    }
+
+                                    if (lineS.length > 0 && lineS[_k-1] !== ' ' && !isOpperator(lineS[_k-1])){
+                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k), ' '));
+                                    }
+        
+                                    if (lineS[_k+1] !== ';' && lineS[_k+1] !== ' ' && !isOpperatorK1) {
+                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
+                                    }
+                                }
+                            }
+
                         } 
 
 
@@ -113,22 +140,10 @@ export function activate(context: vscode.ExtensionContext) {
                             if (lineS[_k] === 'i' && lineS[_k+1] === 'f') { 
                                 bracketLessIf = true;
                                 if (lineS[_k+2] === '(') { //space betwin "if" and "("
-                                    _k += 2;
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+2), ' '));
+                                    _k++;
                                 }
                             }
-                            if (lineS[_k] !== '-' && lineS[_k+1] !== '-' && lineS[_k] !== '+' && lineS[_k+1] !== '+') { //dont add spaces on ++ and --
-                                if (isOpperator(lineS[_k])) { // spaces before and after opperators. example if (i==0) -> if (i == 0)
-                                    if (lineS.length > 0 && lineS[_k-1] !== ' ' && !isOpperator(lineS[_k-1])){
-                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k), ' '));
-                                    }
-        
-                                    if (lineS[_k+1] !== ';' && lineS[_k+1] !== ' ' && !isOpperator(lineS[_k+1])) {
-                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
-                                    }
-                                }
-                            }
-
                         }
 
 
@@ -156,6 +171,10 @@ export function activate(context: vscode.ExtensionContext) {
 function isOpperator(s: string) : boolean {
     return (s === '=' || s === '<' || s === '>' || s === '&' || s === '!' || s === '|' || s === '%' || s === '?' || s === '~' || s === '^' 
     || s === '+' || s === '-' || s === '*' || s === '/');
+}
+
+function newRange(line: vscode.TextLine, k: number, n: number) : vscode.Range {
+    return new vscode.Range(line.range.start.translate(0,k+n), line.range.start.translate(0,k+n+1));
 }
 
 // this method is called when your extension is deactivated
