@@ -1,17 +1,14 @@
-work in progress...
-please report any and all bugs and problems.
-
-
-A Processing (pde) formatter for VSCode
+# Processing (pde) formatter for VSCode
 
 ## Installation
 
-how to install a VSIX file: [code.visualstudio.com/docs/editor/extension-gallery](https://code.visualstudio.com/docs/editor/extension-gallery#:~:text=Install%20from%20a%20VSIX%23&text=Using%20the%20Install%20from%20VSIX,vsix%20file.)
+See [releases](https://github.com/millennIumAMbiguity/processing-formatter/releases) for downloads.
 
-It uses the Formatting API so use the following command for formating:
-Format Document (`Shift+Alt+F`) - Format the entire active file.
-Format Selection (`Ctrl+K Ctrl+F`) - Format the selected text.
+How to install a VSIX file: [code.visualstudio.com/docs/editor/extension-gallery](https://code.visualstudio.com/docs/editor/extension-gallery#:~:text=Install%20from%20a%20VSIX%23&text=Using%20the%20Install%20from%20VSIX,vsix%20file.)
 
+It uses the Formatting API so use the following command for formating:<br>
+Format Document (`Shift+Alt+F`) - Format the entire active file.<br>
+Format Selection (`Ctrl+K Ctrl+F`) - Format the selected text.<br>
 
 ## Formatting examples
 
