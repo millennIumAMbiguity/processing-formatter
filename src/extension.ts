@@ -77,26 +77,41 @@ export function activate(context: vscode.ExtensionContext) {
                         
 
                         if (lineS[_k] === ' ') {
+
+                            if (_k > 0) {
+                                if (lineS[_k-1] === '(')  { //no space after "("
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                                } else if (lineS[_k-1] === '[') { //no space after "{"
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                                } else if (lineS[_k-1] === '.') { //no space after "."
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                                }
+                            }
+
                             if (lineS[_k+1] === ';') { //no space before ";"
                                 edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                            } else if (lineS[_k+1] === '(') { //no space before "(" unless its after a if statment
+                                if (_k > 2) {
+                                    if (lineS[_k-2] !== 'i' && lineS[_k-1] !== 'f') {
+                                        edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                                    }
+                                } else {
+                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                                }
                             } else if (lineS[_k+1] === ')') { //no space before ")"
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                            } else if (lineS[_k+1] === '[') { //no space before "["
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                            } else if (lineS[_k+1] === ']') { //no space before "]"
                                 edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } else if (lineS[_k+1] === '.') { //no space before "."
                                 edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } 
                         } else {
                             if (lineS[_k] === ')') {
-                                if (lineS[_k+1] === '{') { //no space before ";"
+                                if (lineS[_k+1] === '{') { //add space betwin ")" and "{"
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
                                 }
-                            } else if (lineS[_k] === '(') {
-                                if (lineS[_k+1] === ' ') { //no space after "("
-                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 1)));
-                                }
-                            } else if (lineS[_k] === '.') { //no space before "."
-                                if (lineS[_k+1] === ' ') { //no space before "."
-                                    edit.push(vscode.TextEdit.delete(newRange(line, _k, 1)));
-                                }   
                             }
 
                             if (lineS[_k] !== '-' && lineS[_k+1] !== '-' && lineS[_k] !== '+' && lineS[_k+1] !== '+') { //dont add spaces on ++ and --
@@ -137,9 +152,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 
                         if (lineS[_k] !== ' ') {
-                            if (lineS[_k] === 'i' && lineS[_k+1] === 'f') { 
+                            if (lineS[_k] === 'i' && lineS[_k+1] === 'f') { //space betwin "if" and "("
                                 bracketLessIf = true;
-                                if (lineS[_k+2] === '(') { //space betwin "if" and "("
+                                if (lineS[_k+2] === '(') { 
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+2), ' '));
                                     _k++;
                                 }
