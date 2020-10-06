@@ -6,5 +6,4 @@ Before | After
 ------------ | -------------
 `if( i==k){} ;` | `if (i == k) {};`
 `int k=i&1;` | `int k = i & 1;`
-
-Content in the first column | Content in the second column
+`if (i == k &&`<br>`i != 0)`<br>`myFuntion();` | `if (i == k &&`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`i != 0)`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`myFuntion();`
