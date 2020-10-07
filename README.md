@@ -13,8 +13,7 @@ It uses the Formatting API so use the following command for formating:
 * Format Selection (`Ctrl+K Ctrl+F`) - Format the selected text.
 
 ## Features
-* Handles spaces between operators and brackets.
-* Removes spaces before and after `.`.
+* Handles spaces between operators, brackets, and so on.
 * Handles horizontal spacing.
 
 ## Formatting examples
