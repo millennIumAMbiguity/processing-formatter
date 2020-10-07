@@ -123,6 +123,9 @@ export function activate(context: vscode.ExtensionContext) {
                                             continue;
                                         }
                                     }
+                                    if (lineS[_k] === '*' && _k > 0 && lineS[_k-1] === '.') { //for cases as "import processing.pdf.*;"
+                                        continue;
+                                    }
 
                                     var isOpperatorK1 = isOpperator(lineS[_k+1]);
 
