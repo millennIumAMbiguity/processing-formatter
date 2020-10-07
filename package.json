@@ -2,7 +2,7 @@
 	"name": "processing-formatter",
 	"displayName": "processing-formatter",
 	"description": "a processing formatter",
-	"version": "0.2.7",
+	"version": "0.3.5",
 	"author": "millennIumAMbiguity",
 	"license": "MIT",
 	"repository": {
@@ -24,8 +24,7 @@
 		"Processing"
 	  ],
 	"activationEvents": [
-		"onLanguage:pde",
-		"onCommand:format-processing.format"
+		"onLanguage:pde"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -42,12 +41,16 @@
 				]
 			}
 		],
-		"commands": [
-			{
-				"command": "format-processing.format",
-				"title": "(Bad) Format Processing Files"
+		"configuration": {
+			"title": "Processing Formatter",
+			"properties": {
+			  "processing-formatter.format.useSpaceAfterIfAndFor": {
+				"type": "boolean",
+				"default": true,
+				"description": "When true: if() -> if () else the opposite"
+			  }
 			}
-		]
+		}
 	},
 	
 	"scripts": {
