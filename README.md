@@ -15,6 +15,7 @@ It uses the Formatting API so use the following command for formating:
 ## Features
 * Handles spaces between operators, brackets, and so on.
 * Handles horizontal spacing.
+* Edit formatting settings to your preferences.
 
 ## Formatting examples
 
