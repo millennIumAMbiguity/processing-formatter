@@ -31,28 +31,33 @@ export function activate(context: vscode.ExtensionContext) {
                     curlyBracketsCountCopy--;
                 }
 
-                for (var _k = 0; _k < curlyBracketsCountCopy || lineS[_k] === '\t'; _k++) { //tab amounts
-                    if (lineS[_k+1] === '}') {
-                        curlyBracketsCountCopy--;
-                    } else if (bracketLessIf && lineS[_k+1] === '{') {
-                        curlyBracketsCountCopy--;
-                        bracketLessIf = false;
-                    } 
-
-                    if (_k < curlyBracketsCountCopy) {
-                        if (lineS[_k] !== '\t') {
-                            if (lineS[_k] === ' ') {
-                                edit.push(vscode.TextEdit.replace(newRange(line, _k, 0), '\t'));
-                            } else {
-                                edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k), '\t'));
+                {
+                    var _k = 0;
+                    for (_k = 0; _k < curlyBracketsCountCopy || lineS[_k] === '\t'; _k++) { //tab amounts
+                        if (lineS[_k+1] === '}') {
+                            curlyBracketsCountCopy--;
+                        } else if (bracketLessIf && lineS[_k+1] === '{') {
+                            curlyBracketsCountCopy--;
+                            bracketLessIf = false;
+                        } 
+    
+                        if (_k < curlyBracketsCountCopy) {
+                            if (lineS[_k] !== '\t') {
+                                if (lineS[_k] === ' ') {
+                                    edit.push(vscode.TextEdit.replace(newRange(line, _k, 0), '\t'));
+                                } else {
+                                    edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k), '\t'));
+                                }
+                            }
+                        } else {
+                            if (lineS[_k] === '\t') {
+                                edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             }
                         }
-                    } else {
-                        if (lineS[_k] === '\t') {
-                            edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
-                        }
                     }
-                    
+                    if (lineS[_k] === ' ') {
+                        edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                    }
                 }
 
 
@@ -166,32 +171,34 @@ export function activate(context: vscode.ExtensionContext) {
 
 
                         if (lineS[_k] !== ' ') {
-                            if (lineS[_k] === 'i' && lineS[_k+1] === 'f') { //space betwin "if" and "("
+                            if (lineS[_k] === 'i' && lineS[_k+1] === 'f' && //space betwin "if" and "("
+                            (lineS[_k+2] === undefined || lineS[_k+2] === '(' || lineS[_k+2] === ' ')) { 
                                 bracketLessIf = true;
                                 if (ifAndForSpace && lineS[_k+2] === '(') { 
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+2), ' '));
                                     _k++;
                                 }
                             }
-                            else if (_k + 2 < lineS.length) {
-                                if (lineS[_k] === 'f' && lineS[_k+1] === 'o' && lineS[_k+2] === 'r') { //space betwin "for" and "("
+                            else if (lineS[_k] === 'f' && lineS[_k+1] === 'o' && lineS[_k+2] === 'r' && //space betwin "for" and "("
+                            (lineS[_k+3] === undefined || lineS[_k+3] === '(' || lineS[_k+3] === ' ')) { 
+                                bracketLessIf = true;
+                                bracketsTrack = bracketsCount;
+                                if (ifAndForSpace && lineS[_k+3] === '(') { 
+                                    edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+3), ' '));
+                                    _k++;
+                                }
+                            }
+                            else if (_k + 3 < lineS.length) {
+                                if (lineS[_k] === 'e' && lineS[_k+1] === 'l' && lineS[_k+2] === 's' && lineS[_k+3] === 'e' && //space betwin "else " and "("
+                                (lineS[_k+4] === undefined || lineS[_k+4] === '(' || lineS[_k+4] === ' ')) { 
                                     bracketLessIf = true;
-                                    bracketsTrack = bracketsCount;
-                                    if (ifAndForSpace && lineS[_k+3] === '(') { 
-                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+3), ' '));
+                                    if (ifAndForSpace && lineS[_k+4] === '(') { 
+                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+4), ' '));
                                         _k++;
                                     }
                                 }
-                                else if (_k + 3 < lineS.length) {
-                                    if (lineS[_k] === 'e' && lineS[_k+1] === 'l' && lineS[_k+2] === 's' && lineS[_k+3] === 'e') { //space betwin "else " and "("
-                                        bracketLessIf = true;
-                                        if (ifAndForSpace && lineS[_k+4] === '(') { 
-                                            edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+4), ' '));
-                                            _k++;
-                                        }
-                                    }
-                                }
                             }
+                            
                         }
 
 
@@ -209,6 +216,7 @@ export function activate(context: vscode.ExtensionContext) {
                         }
                     } else if (lineS[_k] === '(') {
                         bracketsCount++;
+                        bracketLessIf = true;
                     } else if (lineS[_k] === ')') {
                         bracketsCount--;
                         if (bracketsTrack === bracketsCount) {
