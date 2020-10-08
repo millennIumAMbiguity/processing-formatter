@@ -1,7 +1,7 @@
 {
 	"name": "processing-formatter",
-	"displayName": "processing-formatter",
-	"description": "a processing formatter",
+	"displayName": "Processing Formatter",
+	"description": "a processing pde formatter for vs code",
 	"version": "0.3.10",
 	"author": "millennIumAMbiguity",
 	"license": "MIT",
