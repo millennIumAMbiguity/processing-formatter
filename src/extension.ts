@@ -18,6 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
             let bracketLessIf: boolean = false;
             let bracketLessIfs: number = 0;
             let bracketLessIfBracket: boolean = false;
+            let isStatemnt: boolean = false;
+
 
 
             for (var _i = 0; _i < document.lineCount; _i++) {
@@ -131,9 +133,10 @@ export function activate(context: vscode.ExtensionContext) {
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
                                 }
                             }
-
+                            
                             if (!(lineS[_k] === '-' && lineS[_k+1] === '-') && //dont add spaces on --
-                                !(lineS[_k] === '+' && lineS[_k+1] === '+')) { //dont add spaces on ++
+                                !(lineS[_k] === '+' && lineS[_k+1] === '+') && //dont add spaces on ++
+                                !(!isStatemnt && (lineS[_k] === '<' || lineS[_k] === '>'))) {
                                 if (isOpperator(lineS[_k])) { // spaces before and after opperators. example if (i==0) -> if (i == 0)
 
                                     if (lineS[_k] === '!') { //for cases as: if (! boolValue) -> if (!boolValue)
@@ -179,6 +182,7 @@ export function activate(context: vscode.ExtensionContext) {
                         if (lineS[_k] !== ' ') {
                             if (lineS[_k] === 'i' && lineS[_k+1] === 'f' && //space betwin "if" and "("
                             (lineS[_k+2] === undefined || lineS[_k+2] === '(' || lineS[_k+2] === ' ')) { 
+                                isStatemnt = true;
                                 if (bracketLessIf) {
                                     bracketLessIfs++;
                                 }
@@ -190,6 +194,7 @@ export function activate(context: vscode.ExtensionContext) {
                             }
                             else if (lineS[_k] === 'f' && lineS[_k+1] === 'o' && lineS[_k+2] === 'r' && //space betwin "for" and "("
                             (lineS[_k+3] === undefined || lineS[_k+3] === '(' || lineS[_k+3] === ' ')) { 
+                                isStatemnt = true;
                                 if (bracketLessIf) {
                                     bracketLessIfs++;
                                 }
@@ -241,6 +246,7 @@ export function activate(context: vscode.ExtensionContext) {
                         bracketsCount++;
                         bracketLessIf = true;
                     } else if (lineS[_k] === ')') {
+                        isStatemnt = false;
                         bracketsCount--;
                         if (bracketsTrack === bracketsCount) {
                             bracketsTrack = -1;
