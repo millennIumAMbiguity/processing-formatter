@@ -1,16 +1,15 @@
 # Processing (pde) formatter for VSCode
 
-## Installation
-
-See [releases](https://github.com/millennIumAMbiguity/processing-formatter/releases) for downloads.
-
-How to install a VSIX file: [code.visualstudio.com/docs/editor/extension-gallery](https://code.visualstudio.com/docs/editor/extension-gallery#:~:text=Install%20from%20a%20VSIX%23&text=Using%20the%20Install%20from%20VSIX,vsix%20file.)
+[![Version](https://vsmarketplacebadge.apphb.com/version/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
+[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/installs/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
 
 ## Usage
 
-It uses the Formatting API so use the following command for formating:
-* Format Document (`Shift+Alt+F`) - Format the entire active file.
-* Format Selection (`Ctrl+K Ctrl+F`) - Format the selected text.
+It uses the Formatting API so use the following command for formating: <br>
+* On Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
+* On Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
+* On Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
 
 ## Features
 * Handles spaces between operators, brackets, and so on.
