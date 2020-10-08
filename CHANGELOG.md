@@ -1,9 +1,57 @@
-# Change Log
+### 0.3.10
+- Fixed formatting error on lists.
+- Added project to the Extension Marketplace.
 
-All notable changes to the "processing-formatter" extension will be documented in this file.
+### 0.3.9
+- Added proper support for bracketless `for`, `else`, and `if`.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### 0.3.8
+- Added formatting for selected `(` `)`.
 
-## [Unreleased]
+### 0.3.7
+- Fixed issue that occurred when a variable had `for`, `else`, or `if` in the name.
 
-- Initial release
+### 0.3.6
+- Fixed incorrect formatting of horizontal spacing on `}`.
+
+### 0.3.5
+- Added formatting for `for` and `else`.
+
+### 0.3.4
+- Fixed formatting issue with improper horizontal spacing in special cases.
+
+### 0.3.3
+- Fixed formatting conflict when `(` was after an operator.
+
+### 0.3.2
+- Fixed formatting issue that cased the operators `+` and `-` to not get spaces.
+
+### 0.3.1
+- Fixed formatting issue when `{` was on a new line.
+
+### 0.3.0
+- Added config support.
+
+### 0.2.6
+- Fixed issues regarding `(`.
+
+### 0.2.5
+- Added `[` and `]` formatting.
+
+### 0.2.4
+- Fixed incorrect formatting on this particular case: if `(! boolVar)` -> `if (!boolVar)`.
+
+### 0.2.3
+- Fixed a critical bug that could cause code deletion.
+
+### 0.2.2
+- Handles spaces between operators.
+
+### 0.2.1
+- Handles spaces between brackets.
+
+### 0.2.0
+- Handles horizontal spacing.
+
+
+
