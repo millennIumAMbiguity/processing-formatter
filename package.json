@@ -60,6 +60,7 @@
 		"pretest": "npm run compile && npm run lint",
 		"test": "node ./out/test/runTest.js"
 	},
+	"icon": "icon.png",
 	"devDependencies": {
 		"@types/vscode": "^1.49.0",
 		"@types/glob": "^7.1.3",
