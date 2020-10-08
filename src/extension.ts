@@ -16,6 +16,8 @@ export function activate(context: vscode.ExtensionContext) {
             let bracketsTrack: number = -1;
             let comment: boolean = false;
             let bracketLessIf: boolean = false;
+            let bracketLessIfs: number = 0;
+            let bracketLessIfBracket: boolean = false;
 
 
             for (var _i = 0; _i < document.lineCount; _i++) {
@@ -23,6 +25,9 @@ export function activate(context: vscode.ExtensionContext) {
                 const lineS = line.text;
 
                 var curlyBracketsCountCopy = curlyBracketsCount;
+                
+                curlyBracketsCountCopy += bracketLessIfs;
+
                 if (bracketLessIf){
                     curlyBracketsCountCopy++;
                 }
@@ -46,8 +51,9 @@ export function activate(context: vscode.ExtensionContext) {
                                 if (lineS[_k] === ' ') {
                                     edit.push(vscode.TextEdit.replace(newRange(line, _k, 0), '\t'));
                                 } else {
-                                    edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k), '\t'));
+                                    edit.push(vscode.TextEdit.insert(line.range.start, '\t'));
                                 }
+                                
                             }
                         } else {
                             if (lineS[_k] === '\t') {
@@ -173,6 +179,9 @@ export function activate(context: vscode.ExtensionContext) {
                         if (lineS[_k] !== ' ') {
                             if (lineS[_k] === 'i' && lineS[_k+1] === 'f' && //space betwin "if" and "("
                             (lineS[_k+2] === undefined || lineS[_k+2] === '(' || lineS[_k+2] === ' ')) { 
+                                if (bracketLessIf) {
+                                    bracketLessIfs++;
+                                }
                                 bracketLessIf = true;
                                 if (ifAndForSpace && lineS[_k+2] === '(') { 
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+2), ' '));
@@ -181,6 +190,9 @@ export function activate(context: vscode.ExtensionContext) {
                             }
                             else if (lineS[_k] === 'f' && lineS[_k+1] === 'o' && lineS[_k+2] === 'r' && //space betwin "for" and "("
                             (lineS[_k+3] === undefined || lineS[_k+3] === '(' || lineS[_k+3] === ' ')) { 
+                                if (bracketLessIf) {
+                                    bracketLessIfs++;
+                                }
                                 bracketLessIf = true;
                                 bracketsTrack = bracketsCount;
                                 if (ifAndForSpace && lineS[_k+3] === '(') { 
@@ -191,6 +203,9 @@ export function activate(context: vscode.ExtensionContext) {
                             else if (_k + 3 < lineS.length) {
                                 if (lineS[_k] === 'e' && lineS[_k+1] === 'l' && lineS[_k+2] === 's' && lineS[_k+3] === 'e' && //space betwin "else " and "("
                                 (lineS[_k+4] === undefined || lineS[_k+4] === '(' || lineS[_k+4] === ' ')) { 
+                                    if (bracketLessIf) {
+                                        bracketLessIfs++;
+                                    }
                                     bracketLessIf = true;
                                     if (ifAndForSpace && lineS[_k+4] === '(') { 
                                         edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+4), ' '));
@@ -208,11 +223,19 @@ export function activate(context: vscode.ExtensionContext) {
                         curlyBracketsCount++;
                         bracketLessIf = false;
                         bracketsTrack = -1;
+                        bracketLessIfBracket = true;
                     } else if (lineS[_k] === '}') {
                         curlyBracketsCount--;
+                        bracketLessIfs = 0;
+                        bracketLessIfBracket = false;
+                        
                     } else if (lineS[_k] === ';') {
                         if (bracketsTrack === -1){
                             bracketLessIf = false;
+                            if (!bracketLessIfBracket) {
+                                bracketLessIfs = 0;
+                            }
+                            bracketLessIfBracket = false;
                         }
                     } else if (lineS[_k] === '(') {
                         bracketsCount++;
