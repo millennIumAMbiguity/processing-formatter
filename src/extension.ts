@@ -83,6 +83,8 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     if (lineS[_k] === ' ' && !tabReplace) {
                         edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
+                    } else if (lineS[_k] === '\t') {
+                        edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                     }
                 }
 
@@ -225,7 +227,8 @@ export function activate(context: vscode.ExtensionContext) {
                             }
                             else if (_k + 3 < lineS.length) {
                                 if (lineS[_k] === 'e' && lineS[_k+1] === 'l' && lineS[_k+2] === 's' && lineS[_k+3] === 'e' && //space betwin "else " and "("
-                                (lineS[_k+4] === undefined || lineS[_k+4] === '(' || lineS[_k+4] === ' ')) { 
+                                (lineS[_k+4] === undefined || lineS[_k+4] === '(' || lineS[_k+4] === ' ') &&
+                                !(lineS[_k+5] === 'i' && lineS[_k+6] === 'f')) { //is not a "if else"
                                     if (bracketLessIf) {
                                         bracketLessIfs++;
                                     }

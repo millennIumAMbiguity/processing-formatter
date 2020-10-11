@@ -1,3 +1,7 @@
+### 0.3.12
+- Fixed occurrences when formatting didn't remove all extra tabs.
+- Fixed formatting error on `else if`.
+
 ### 0.3.11
 - Fixed formatting error when converting from spaces to tabs.
 - Fixed formatting conflict when a class's `{` is on new row;
