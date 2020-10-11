@@ -1,3 +1,8 @@
+### 0.3.13
+- Fixed problem with the `logChanges` setting.
+- `logChanges` setting is now set to `false` as default.
+- Added formatting as shown: `}else if ()` -> `} else if ()`.
+
 ### 0.3.12
 - Fixed occurrences when formatting didn't remove all extra tabs.
 - Fixed formatting error on `else if`.

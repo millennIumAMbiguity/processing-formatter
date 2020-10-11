@@ -9,6 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             const config = vscode.workspace.getConfiguration('processing-formatter');
             const ifAndForSpace = config.get('format.useSpaceAfterIfAndFor');
+            const settingLog = config.get('interface.logChanges');
 
             let edit: vscode.TextEdit[] = [];
             let curlyBracketsCount: number = 0;
@@ -147,11 +148,14 @@ export function activate(context: vscode.ExtensionContext) {
                             } else if (lineS[_k+1] === '.') { //no space before "."
                                 edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                             } 
+                            
                         } else {
                             if (lineS[_k] === ')') {
                                 if (lineS[_k+1] === '{') { //add space betwin ")" and "{"
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
                                 }
+                            } else if (lineS[_k] === '}' && lineS[_k+1] !== ' ' && lineS[_k+1] !== undefined && lineS[_k+1] !== ';'){
+                                edit.push(vscode.TextEdit.insert(line.range.start.translate(0,_k+1), ' '));
                             }
                             
                             if (!(lineS[_k] === '-' && lineS[_k+1] === '-') && //dont add spaces on --
@@ -278,7 +282,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 }
             }
-            if (edit.length > 0) {
+            if (edit.length > 0 && settingLog) {
                 vscode.window.showInformationMessage('Applied a total of '+edit.length+' edits.');
             }
 			return edit;
