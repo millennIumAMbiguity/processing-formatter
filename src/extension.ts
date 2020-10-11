@@ -36,13 +36,31 @@ export function activate(context: vscode.ExtensionContext) {
 
                 if (lineS[0] === '}') {
                     curlyBracketsCountCopy--;
-                }
+                } else if (bracketLessIf && lineS[0] === '{') {
+                    curlyBracketsCountCopy--;
+                    bracketLessIf = false;
+                } 
 
                 {
+                    var tabReplace = false;
                     var _k = 0;
                     for (_k = 0; _k < curlyBracketsCountCopy || lineS[_k] === '\t'; _k++) { //tab amounts
-                        if (lineS[_k+1] === '}') {
+
+                        if (lineS[_k] === ' ' && lineS[_k+1] === ' ' && lineS[_k+2] === ' ' && lineS[_k+3] === ' ') {
+                            edit.push(vscode.TextEdit.replace( new vscode.Range(line.range.start.translate(0,_k), line.range.start.translate(0,_k+4)) , '\t'));
+                            _k += 4;
+                            tabReplace = true;
+                            if (_k >= curlyBracketsCountCopy) {
+                                break;
+                            }
+                        }
+
+                        else if (lineS[_k+1] === '}') {
                             curlyBracketsCountCopy--;
+                            if (_k >= curlyBracketsCountCopy) {
+                                break;
+                            }
+
                         } else if (bracketLessIf && lineS[_k+1] === '{') {
                             curlyBracketsCountCopy--;
                             bracketLessIf = false;
@@ -63,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
                             }
                         }
                     }
-                    if (lineS[_k] === ' ') {
+                    if (lineS[_k] === ' ' && !tabReplace) {
                         edit.push(vscode.TextEdit.delete(newRange(line, _k, 0)));
                     }
                 }

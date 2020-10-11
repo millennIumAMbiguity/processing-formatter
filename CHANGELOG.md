@@ -1,3 +1,9 @@
+### 0.3.11
+- Fixed formatting error when converting from spaces to tabs.
+- Fixed formatting conflict when a class's `{` is on new row;
+- Fixed problem of random spaces occurring during horizontal formatting.
+- added setting to disable logs.
+
 ### 0.3.10
 - Fixed formatting error on lists.
 - Added project to the Extension Marketplace.
