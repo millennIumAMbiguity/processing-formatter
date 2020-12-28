@@ -20,6 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
             let bracketLessIfs: number = 0;
             let bracketLessIfBracket: boolean = false;
             let isStatemnt: boolean = false;
+            let isString: number = 0;
 
 
 
@@ -92,6 +93,16 @@ export function activate(context: vscode.ExtensionContext) {
 
                 for (var _k = 0; _k < lineS.length; _k++) {
 
+
+                    if (isString !== 0) {
+                        if (isString === 1 && lineS[_k] === '"') { //string character: "
+                            isString = 0;
+                        } else if (isString === 2 && lineS[_k] === "'") { //string character: '
+                            isString = 0;
+                        }
+                        continue;
+                    }
+
                     if (_k + 1 < lineS.length) {
 
                         if (comment) {
@@ -105,7 +116,7 @@ export function activate(context: vscode.ExtensionContext) {
                             if (lineS[_k + 1] === '*') { //start multiline comment
                                 _k++;
                                 comment = true;
-                                continue;
+                                break;
                             }
                             if (lineS[_k + 1] === '/') { //dont format comments
                                 break;
@@ -191,7 +202,6 @@ export function activate(context: vscode.ExtensionContext) {
                                     }
                                 }
                             }
-
                         } 
 
 
@@ -199,7 +209,6 @@ export function activate(context: vscode.ExtensionContext) {
                         continue;
                     }
                     if (_k + 2 < lineS.length) { 
-
 
 
 
@@ -243,10 +252,7 @@ export function activate(context: vscode.ExtensionContext) {
                                     }
                                 }
                             }
-                            
                         }
-
-
                     }
 
                     if (lineS[_k] === '{') {
@@ -276,6 +282,10 @@ export function activate(context: vscode.ExtensionContext) {
                         if (bracketsTrack === bracketsCount) {
                             bracketsTrack = -1;
                         }
+                    } else if (lineS[_k] === '"') {
+                        isString = 1;
+                    } else if (lineS[_k] === "'") {
+                        isString = 2;
                     }
 
 

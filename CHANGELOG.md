@@ -1,3 +1,7 @@
+### 0.3.14
+- Added feature that makes formatting to ignore strings, [issue #1](https://github.com/millennIumAMbiguity/processing-formatter/issues/1).
+- Fixed bug that caused multiline comments to format on the first row.
+
 ### 0.3.13
 - Fixed problem with the `logChanges` setting.
 - `logChanges` setting is now set to `false` as default.
@@ -11,7 +15,7 @@
 - Fixed formatting error when converting from spaces to tabs.
 - Fixed formatting conflict when a class's `{` is on new row;
 - Fixed problem of random spaces occurring during horizontal formatting.
-- added setting to disable logs.
+- Added setting to disable logs.
 
 ### 0.3.10
 - Fixed formatting error on lists.
