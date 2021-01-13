@@ -1,5 +1,11 @@
+### 0.4.0
+- The formatter honor the current indentation mode of the current file. [issue #2](https://github.com/millennIumAMbiguity/processing-formatter/issues/2)
+- Added support for different tab spaces. 
+- Fixed bug that caused the formation to stop working in cases like `( (`.
+- Now supports changes in settings without a restart.
+
 ### 0.3.14
-- Added feature that makes formatting to ignore strings, [issue #1](https://github.com/millennIumAMbiguity/processing-formatter/issues/1).
+- Added feature that makes formatting to ignore strings. [issue #1](https://github.com/millennIumAMbiguity/processing-formatter/issues/1)
 - Fixed bug that caused multiline comments to format on the first row.
 
 ### 0.3.13
