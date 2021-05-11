@@ -1,3 +1,6 @@
+### 0.4.1
+- Added support for formatting switch statements. [issue #4](https://github.com/millennIumAMbiguity/processing-formatter/issues/4)
+
 ### 0.4.0
 - The formatter honor the current indentation mode of the current file. [issue #2](https://github.com/millennIumAMbiguity/processing-formatter/issues/2)
 - Added support for different tab spaces. 

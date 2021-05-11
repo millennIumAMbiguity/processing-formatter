@@ -2,11 +2,12 @@ import * as vscode from 'vscode';
 import * as f from './functions';
 
 export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: string, curlyBracketsCount: number, bracketLessIfs: number,
-    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string): boolean {
+    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string, caseAmount: number): boolean {
 
     var curlyBracketsCountCopy = curlyBracketsCount;
 
     curlyBracketsCountCopy += bracketLessIfs;
+    curlyBracketsCountCopy += caseAmount;
 
     if (bracketLessIf) {
         curlyBracketsCountCopy++;

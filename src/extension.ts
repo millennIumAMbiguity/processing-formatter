@@ -31,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
             let isStatemnt: boolean = false;
             let isString: number = 0;
             let spaceTab: string = ' ';
+            let caseAmount: number = 0;
 
             for (let i = 1; i < tabsize; i++) {
                 spaceTab += ' ';
@@ -41,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const line = document.lineAt(_i);
                 const lineS = line.text;
 
-                bracketLessIf = spacing(edit, line, lineS, curlyBracketsCount, bracketLessIfs, bracketLessIf, insertSpaces, tabsize, spaceTab);
+                bracketLessIf = spacing(edit, line, lineS, curlyBracketsCount, bracketLessIfs, bracketLessIf, insertSpaces, tabsize, spaceTab, caseAmount);
 
                 //TODO: separate the formatting to its own file
 
@@ -206,6 +207,17 @@ export function activate(context: vscode.ExtensionContext) {
                                     if (ifAndForSpace && lineS[_k + 4] === '(') {
                                         edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 4), ' '));
                                         _k++;
+                                    }
+                                }
+                                //gets spacing for switches
+                                else if (lineS[_k] === 'c' && lineS[_k + 1] === 'a' && lineS[_k + 2] === 's' && lineS[_k + 3] === 'e' && lineS[_k + 4] === ' ') {
+                                    caseAmount++;
+                                    _k += 3;
+                                    continue;
+                                } else if (lineS[_k] === 'b' && lineS[_k + 1] === 'r' && lineS[_k + 2] === 'e' && lineS[_k + 3] === 'a' && lineS[_k + 4] === 'k' && (lineS[_k + 5] === ';' || lineS[_k + 5] === ' ')) {
+                                    _k += 3;
+                                    if (caseAmount > 0) {
+                                        caseAmount--;
                                     }
                                 }
                             }
