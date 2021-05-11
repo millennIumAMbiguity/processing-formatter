@@ -23,6 +23,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
+**Settings and Version information**
+- Insert spaces: yes/no *Do you use spaces or tabs?*
+- Formatter version: 
+- VS Code version: 
+
 **Additional context**
 Add any other context about the problem here.
-If the spacing is part of your issue, then please state if your code is using spaces or tabs.
