@@ -1,22 +1,17 @@
 import * as vscode from 'vscode';
 import * as f from './functions';
 
-export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: string, curlyBracketsCount: number, bracketLessIfs: number,
-    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string, caseAmount: number): boolean {
-
-    var curlyBracketsCountCopy = curlyBracketsCount;
-
-    curlyBracketsCountCopy += bracketLessIfs;
-    curlyBracketsCountCopy += caseAmount;
+export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: string, baseSpacing: number,
+    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string): boolean {
 
     if (bracketLessIf) {
-        curlyBracketsCountCopy++;
+        baseSpacing++;
     }
 
     if (lineS[0] === '}') {
-        curlyBracketsCountCopy--;
+        baseSpacing--;
     } else if (bracketLessIf && lineS[0] === '{') {
-        curlyBracketsCountCopy--;
+        baseSpacing--;
         bracketLessIf = false;
     }
 
@@ -26,7 +21,7 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
     if (insertSpaces) { //insert Spaces === true
 
         var returnRange = 0;
-        for (_k = 0; _k < curlyBracketsCountCopy * tabsize; _k += tabsize) { //tab amounts
+        for (_k = 0; _k < baseSpacing * tabsize; _k += tabsize) { //tab amounts
 
             //replace tab with spaces
             if (lineS[_k] === '\t') {
@@ -36,14 +31,14 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
 
             //how '}' affect spacing
             if (f.charExistInRange(lineS, '}', _k + 1, tabsize + tabsize -1)) { 
-                curlyBracketsCountCopy--;
-                if (_k >= curlyBracketsCountCopy * tabsize) {
+                baseSpacing--;
+                if (_k >= baseSpacing * tabsize) {
                     break;
                 }
             } 
             //how '{' affect spacing
             else if (f.charExistInRange(lineS, '{', _k + tabsize, tabsize)) {
-                curlyBracketsCountCopy--;
+                baseSpacing--;
                 bracketLessIf = false;
             }
 
@@ -64,7 +59,7 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
 
     } else { //insert Spaces === false
         //TODO fix-up/clean-up
-        for (_k = 0; _k < curlyBracketsCountCopy || lineS[_k] === '\t'; _k++) { //tab amounts
+        for (_k = 0; _k < baseSpacing || lineS[_k] === '\t'; _k++) { //tab amounts
 
             var nextTab = '';
             for (let i = 0; i < tabsize; i++) {
@@ -74,22 +69,22 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
                 edit.push(vscode.TextEdit.replace(new vscode.Range(line.range.start.translate(0, _k), line.range.start.translate(0, _k + tabsize)), '\t'));
                 _k += 4;
                 tabReplace = true;
-                if (_k >= curlyBracketsCountCopy) {
+                if (_k >= baseSpacing) {
                     break;
                 }
             }
 
             else if (lineS[_k + 1] === '}') {
-                curlyBracketsCountCopy--;
-                if (_k >= curlyBracketsCountCopy) {
+                baseSpacing--;
+                if (_k >= baseSpacing) {
                     break;
                 }
             } else if (bracketLessIf && lineS[_k + 1] === '{') {
-                curlyBracketsCountCopy--;
+                baseSpacing--;
                 bracketLessIf = false;
             }
 
-            if (_k < curlyBracketsCountCopy) {
+            if (_k < baseSpacing) {
                 if (lineS[_k] !== '\t') {
                     if (lineS[_k] === ' ') {
                         edit.push(vscode.TextEdit.replace(f.newRange(line, _k, 0), '\t'));

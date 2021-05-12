@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const line = document.lineAt(_i);
                 const lineS = line.text;
 
-                bracketLessIf = spacing(edit, line, lineS, curlyBracketsCount, bracketLessIfs, bracketLessIf, insertSpaces, tabsize, spaceTab, caseAmount);
+                bracketLessIf = spacing(edit, line, lineS, curlyBracketsCount + bracketLessIfs + caseAmount, bracketLessIf, insertSpaces, tabsize, spaceTab);
 
                 //TODO: separate the formatting to its own file
 
