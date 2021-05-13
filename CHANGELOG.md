@@ -1,14 +1,18 @@
+### 0.4.2
+- Fixed error on formatting negative numbers. #5 
+- Update changelog format.
+
 ### 0.4.1
-- Added support for formatting switch statements. [issue #4](https://github.com/millennIumAMbiguity/processing-formatter/issues/4)
+- Added support for formatting switch statements. #4
 
 ### 0.4.0
-- The formatter honor the current indentation mode of the current file. [issue #2](https://github.com/millennIumAMbiguity/processing-formatter/issues/2)
+- The formatter honor the current indentation mode of the current file. #2
 - Added support for different tab spaces. 
 - Fixed bug that caused the formation to stop working in cases like `( (`.
 - Now supports changes in settings without a restart.
 
 ### 0.3.14
-- Added feature that makes formatting to ignore strings. [issue #1](https://github.com/millennIumAMbiguity/processing-formatter/issues/1)
+- Added feature that makes formatting to ignore strings. #1
 - Fixed bug that caused multiline comments to format on the first row.
 
 ### 0.3.13
