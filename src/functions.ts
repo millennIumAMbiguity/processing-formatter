@@ -17,6 +17,17 @@ export function getCharacterRepets(s: string, c: string, startId: number, n: num
     }
     return true;
 }
+export function getAmountCharacterRepets(s: string, c: string, startId: number): number {
+    let count: number = 0;
+    for (let i = startId; i < s.length; i++) {
+        if (s[i] !== c) {
+            break;
+        }
+        count++;
+    }
+    return count;
+}
+
 export function isInRange(s: string, c: string, startId: number, n: number): number {
     let i = 0;
     for (i = startId; i < startId + n; i++) {

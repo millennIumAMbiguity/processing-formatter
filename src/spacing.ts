@@ -4,10 +4,6 @@ import * as f from './functions';
 export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: string, baseSpacing: number,
     bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string): boolean {
 
-    if (bracketLessIf) {
-        baseSpacing++;
-    }
-
     if (lineS[0] === '}') {
         baseSpacing--;
     } else if (bracketLessIf && lineS[0] === '{') {
