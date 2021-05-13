@@ -147,22 +147,31 @@ export function activate(context: vscode.ExtensionContext) {
                                     if (lineS[_k] === '*' && _k > 0 && lineS[_k - 1] === '.') { //for cases as "import processing.pdf.*;"
                                         continue;
                                     }
-                                    if (_k > 0 && (lineS[_k - 1] === '+' || lineS[_k - 1] === '-')) {
+                                    if (_k > 0 && (lineS[_k - 1] === '+' || lineS[_k - 1] === '-')) { //for -= or +=
                                         continue;
                                     }
 
                                     var isOpperatorK1 = f.isOpperator(lineS[_k + 1]);
-
-                                    if (!isOpperatorK1 && lineS[_k] === '!') { //for cases as "if (!boolValue)"
-                                        continue;
+                                    if (isOpperatorK1) {
+                                        if ( lineS[_k + 2] === ' ') {
+                                            if ( lineS[_k + 3] === ' ') {
+                                                edit.push(vscode.TextEdit.delete(f.newRange(line, _k+3, 0))); //remove double space after double Opperator
+                                            }
+                                        } else {
+                                            edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k+2), ' ')); //add space after double Opperator
+                                        }
+                                    }
+                                    else {
+                                        if (lineS[_k] === '!') { //for cases as "if (!boolValue)"
+                                            continue;
+                                        }
+                                        if (lineS[_k + 1] !== ';' && lineS[_k + 1] !== ' ' && !isOpperatorK1) {
+                                            edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
+                                        }
                                     }
 
-                                    if (lineS.length > 0 && lineS[_k - 1] !== ' ' && !f.isOpperator(lineS[_k - 1])) {
+                                    if (lineS.length > 0 && lineS[_k - 1] !== ' ' && !f.isOpperator(lineS[_k - 1])) { //space before opperator
                                         edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k), ' '));
-                                    }
-
-                                    if (lineS[_k + 1] !== ';' && lineS[_k + 1] !== ' ' && !isOpperatorK1) {
-                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
                                     }
                                 }
                             }
