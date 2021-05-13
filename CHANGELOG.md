@@ -1,3 +1,6 @@
+### 0.4.3
+- Fixed bug when variable is set to negativ: `myInt = - 1;` -> `myInt = -1;`.
+
 ### 0.4.2
 - Fixed error on formatting negative numbers. #5 
 - Update changelog format.
