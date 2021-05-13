@@ -1,3 +1,8 @@
+### 0.4.3
+- Fixed bug when variable is set to negativ: `myInt = - 1;` -> `myInt = -1;`.
+- Fixed issue with the format not inserting spaces: `i +=1;` -> `i += 1;`.
+- Performance improvements.
+
 ### 0.4.2
 - Fixed error on formatting negative numbers. #5 
 - Update changelog format.

@@ -42,11 +42,24 @@ export function activate(context: vscode.ExtensionContext) {
                 const line = document.lineAt(_i);
                 const lineS = line.text;
 
-                bracketLessIf = spacing(edit, line, lineS, curlyBracketsCount + bracketLessIfs + caseAmount, bracketLessIf, insertSpaces, tabsize, spaceTab);
+                let baseSpace: number = curlyBracketsCount + bracketLessIfs + caseAmount;
+                if (bracketLessIf) {
+                    baseSpace++;
+                }
+                
+                bracketLessIf = spacing(edit, line, lineS, baseSpace, bracketLessIf, insertSpaces, tabsize, spaceTab);
 
                 //TODO: separate the formatting to its own file
 
-                for (var _k = 0; _k < lineS.length; _k++) {
+                baseSpace--;
+                if (!insertSpaces) {
+                    baseSpace--;
+                }
+                if (baseSpace < 0) {
+                    baseSpace = 0;
+                }
+
+                for (var _k = baseSpace; _k < lineS.length; _k++) {
 
 
                     if (isString !== 0) {
@@ -80,7 +93,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 
                         if (lineS[_k] === ' ') {
-
                             if (_k > 0) {
                                 if (lineS[_k - 1] === '(') { //no space after "("
                                     edit.push(vscode.TextEdit.delete(f.newRange(line, _k, 0)));
@@ -125,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 }
                             } else if (lineS[_k] === '}' && lineS[_k + 1] !== ' ' && lineS[_k + 1] !== undefined && lineS[_k + 1] !== ';') {
                                 edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
-                            } else if ((lineS[_k] === '(' || lineS[_k] === ',') && lineS[_k + 1] === ' ' && lineS[_k + 2] === '-') { // handle negativ numbers // if ( - 1, - 2) -> if ( -1, -2)
+                            } else if ((lineS[_k] === '(' || lineS[_k] === ',' || lineS[_k] === '=') && lineS[_k + 1] === ' ' && lineS[_k + 2] === '-') { // handle negativ numbers // if ( - 1, - 2) -> if ( -1, -2)
                                 _k += 3;
                                 if (lineS[_k] === ' ') {
                                     edit.push(vscode.TextEdit.delete(f.newRange(line, _k, 0)));
@@ -147,22 +159,29 @@ export function activate(context: vscode.ExtensionContext) {
                                     if (lineS[_k] === '*' && _k > 0 && lineS[_k - 1] === '.') { //for cases as "import processing.pdf.*;"
                                         continue;
                                     }
-                                    if (_k > 0 && (lineS[_k - 1] === '+' || lineS[_k - 1] === '-')) {
+                                    if (_k > 0 && (lineS[_k - 1] === '+' || lineS[_k - 1] === '-')) { //for -= or +=
                                         continue;
                                     }
 
                                     var isOpperatorK1 = f.isOpperator(lineS[_k + 1]);
-
-                                    if (!isOpperatorK1 && lineS[_k] === '!') { //for cases as "if (!boolValue)"
-                                        continue;
+                                    if (isOpperatorK1) {
+                                        if (lineS[_k + 2] !== ' ') {
+                                            edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 2), ' ')); //add space after double Opperator
+                                        } /*else if ( lineS[_k + 3] === ' ') {
+                                                edit.push(vscode.TextEdit.delete(f.newRange(line, _k+3, 0))); //remove double space after double Opperator
+                                        }*/
+                                    }
+                                    else {
+                                        if (lineS[_k] === '!') { //for cases as "if (!boolValue)"
+                                            continue;
+                                        }
+                                        if (lineS[_k + 1] !== ';' && lineS[_k + 1] !== ' ' && !isOpperatorK1) {
+                                            edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
+                                        }
                                     }
 
-                                    if (lineS.length > 0 && lineS[_k - 1] !== ' ' && !f.isOpperator(lineS[_k - 1])) {
+                                    if (lineS.length > 0 && lineS[_k - 1] !== ' ' && !f.isOpperator(lineS[_k - 1])) { //space before opperator
                                         edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k), ' '));
-                                    }
-
-                                    if (lineS[_k + 1] !== ';' && lineS[_k + 1] !== ' ' && !isOpperatorK1) {
-                                        edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
                                     }
                                 }
                             }

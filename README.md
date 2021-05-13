@@ -5,11 +5,12 @@
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
 
 ## Usage
-
 It uses the Formatting API so use the following command for formating: <br>
 * On Windows <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
 * On Linux <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
 * On Mac <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>F</kbd>
+
+It is recommended to use `Insert Spaces` for the best possible experience.
 
 ## Features
 * Handles spaces between operators, brackets, and so on.
