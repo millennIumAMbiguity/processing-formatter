@@ -1,3 +1,7 @@
+### 0.4.4
+- Added support for switch cases without break. #4 (read commit for more detail)
+- Improved spacing formation smoothness for bracketless if, else, for...
+
 ### 0.4.3
 - Fixed bug when variable is set to negativ: `myInt = - 1;` -> `myInt = -1;`.
 - Fixed issue with the format not inserting spaces: `i +=1;` -> `i += 1;`.

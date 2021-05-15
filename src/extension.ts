@@ -31,7 +31,8 @@ export function activate(context: vscode.ExtensionContext) {
             let isStatemnt: boolean = false;
             let isString: number = 0;
             let spaceTab: string = ' ';
-            let caseAmount: number = 0;
+            let isInsideACase: boolean = false;
+            let caseBaseSpacing: number = 0;
 
             for (let i = 1; i < tabsize; i++) {
                 spaceTab += ' ';
@@ -42,12 +43,20 @@ export function activate(context: vscode.ExtensionContext) {
                 const line = document.lineAt(_i);
                 const lineS = line.text;
 
-                let baseSpace: number = curlyBracketsCount + bracketLessIfs + caseAmount;
+                let baseSpace: number = curlyBracketsCount + bracketLessIfs;
                 if (bracketLessIf) {
                     baseSpace++;
                 }
-                
-                bracketLessIf = spacing(edit, line, lineS, baseSpace, bracketLessIf, insertSpaces, tabsize, spaceTab);
+                if (isInsideACase) {
+                    baseSpace++;
+                }
+
+                var newBracketLessIf = spacing(edit, line, lineS, baseSpace, bracketLessIf, insertSpaces, tabsize, spaceTab, caseBaseSpacing);
+                if (bracketLessIf && !newBracketLessIf) {
+                    baseSpace--;
+                }
+                bracketLessIf = newBracketLessIf;
+
 
                 //TODO: separate the formatting to its own file
 
@@ -233,13 +242,15 @@ export function activate(context: vscode.ExtensionContext) {
                                 }
                                 //gets spacing for switches
                                 else if (lineS[_k] === 'c' && lineS[_k + 1] === 'a' && lineS[_k + 2] === 's' && lineS[_k + 3] === 'e' && lineS[_k + 4] === ' ') {
-                                    caseAmount++;
+                                    isInsideACase = true;
+                                    caseBaseSpacing = baseSpace;
                                     _k += 3;
                                     continue;
                                 } else if (lineS[_k] === 'b' && lineS[_k + 1] === 'r' && lineS[_k + 2] === 'e' && lineS[_k + 3] === 'a' && lineS[_k + 4] === 'k' && (lineS[_k + 5] === ';' || lineS[_k + 5] === ' ')) {
                                     _k += 3;
-                                    if (caseAmount > 0) {
-                                        caseAmount--;
+                                    if (caseBaseSpacing >= baseSpace - 1) {
+                                        isInsideACase = false;
+                                        caseBaseSpacing = -1;
                                     }
                                 }
                             }
@@ -255,6 +266,10 @@ export function activate(context: vscode.ExtensionContext) {
                         curlyBracketsCount--;
                         bracketLessIfs = 0;
                         bracketLessIfBracket = false;
+                        if (isInsideACase && caseBaseSpacing >= baseSpace - 1) {
+                            isInsideACase = false;
+                            caseBaseSpacing = -1;
+                        }
 
                     } else if (lineS[_k] === ';') {
                         if (bracketsTrack === -1) {

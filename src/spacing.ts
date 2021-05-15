@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as f from './functions';
 
 export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: string, baseSpacing: number,
-    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string): boolean {
+    bracketLessIf: boolean, insertSpaces: boolean, tabsize: number, spaceTab: string, caseBaseSpacing: number): boolean {
 
     if (lineS[0] === '}') {
         baseSpacing--;
@@ -26,12 +26,16 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
             }
 
             //how '}' affect spacing
-            if (f.charExistInRange(lineS, '}', _k + 1, tabsize + tabsize -1)) { 
+            if (f.charExistInRange(lineS, '}', _k + 1, tabsize + tabsize - 1)) {
                 baseSpacing--;
+                if (baseSpacing !== -1 && baseSpacing <= caseBaseSpacing + 1) {
+                    baseSpacing--;
+                    caseBaseSpacing = -1;
+                }
                 if (_k >= baseSpacing * tabsize) {
                     break;
                 }
-            } 
+            }
             //how '{' affect spacing
             else if (f.charExistInRange(lineS, '{', _k + tabsize, tabsize)) {
                 baseSpacing--;
@@ -39,7 +43,7 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
             }
 
             //increase spacing
-            if ((returnRange = f.isInRange(lineS, ' ', _k, tabsize)) < tabsize) { 
+            if ((returnRange = f.isInRange(lineS, ' ', _k, tabsize)) < tabsize) {
                 var s = '';
                 for (let i = 0; i < tabsize - returnRange; i++) {
                     s += ' ';
@@ -72,6 +76,10 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
 
             else if (lineS[_k + 1] === '}') {
                 baseSpacing--;
+                if (baseSpacing !== -1 && baseSpacing <= caseBaseSpacing + 1) {
+                    baseSpacing--;
+                    caseBaseSpacing = -1;
+                }
                 if (_k >= baseSpacing) {
                     break;
                 }
