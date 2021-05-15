@@ -45,3 +45,36 @@ export function charExistInRange(s: string, c: string, startId: number, n: numbe
     }
     return false;
 }
+export function getArguments(s: string, ignoreFormatting: boolean, ignoreSpacing: boolean): boolean[] {
+    let argumentsArray: string[] = s.split('[');
+    for (let index = 1; index < argumentsArray.length; index++) {
+        let tempArray: string[] = argumentsArray[index].split(']');
+        if (tempArray.length <= 1) {
+            continue;
+        }
+        let argument: string = tempArray[0];
+        argument.toLocaleLowerCase();
+        argument = argument.replace(' ', '');
+        switch (argument) {
+            case "ignoreformatting":
+                ignoreFormatting = true;
+                break;
+            case "formatting":
+                ignoreFormatting = !ignoreFormatting;
+                break;
+            case "applyformatting":
+                ignoreFormatting = false;
+                break;
+            case "ignorespacing":
+                ignoreSpacing = true;
+                break;
+            case "spacing":
+                ignoreSpacing = !ignoreSpacing;
+                break;
+            case "applyspacing":
+                ignoreSpacing = false;
+                break;
+        }
+    }
+    return [ignoreFormatting, ignoreSpacing];
+}

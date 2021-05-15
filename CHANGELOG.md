@@ -1,3 +1,6 @@
+### 0.5.0
+- Added inline formatting arguments. 
+
 ### 0.4.4
 - Added support for switch cases without break. #4 (read commit for more detail)
 - Improved spacing formation smoothness for bracketless if, else, for...
