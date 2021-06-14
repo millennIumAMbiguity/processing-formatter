@@ -6,7 +6,7 @@ export function isOpperator(s: string): boolean {
 }
 
 export function newRange(line: vscode.TextLine, k: number, n: number): vscode.Range {
-    return new vscode.Range(line.range.start.translate(0, k + n), line.range.start.translate(0, k + n + 1));
+    return new vscode.Range(line.range.start.translate(0, k), line.range.start.translate(0, k + n + 1));
 }
 
 export function getCharacterRepets(s: string, c: string, startId: number, n: number): boolean {
