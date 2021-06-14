@@ -144,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 if (lineS[_k + 1] === '{') { //add space betwin ")" and "{"
                                     edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
                                 }
-                            } else if (lineS[_k] === '}' && lineS[_k + 1] !== ' ' && lineS[_k + 1] !== undefined && lineS[_k + 1] !== ';') {
+                            } else if (lineS[_k] === '}' && lineS[_k + 1] !== ' ' && lineS[_k + 1] !== undefined && lineS[_k + 1] !== ';'&& lineS[_k + 1] !== ')') {
                                 edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
                             } else if ((lineS[_k] === '(' || lineS[_k] === ',' || lineS[_k] === '=') && lineS[_k + 1] === ' ' && lineS[_k + 2] === '-') { // handle negativ numbers // if ( - 1, - 2) -> if ( -1, -2)
                                 _k += 3;
