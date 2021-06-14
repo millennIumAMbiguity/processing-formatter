@@ -1,3 +1,6 @@
+### 0.4.6
+- Fixed small issue.
+
 ### 0.4.5
 - Fixed bug that could appear on the ending brackets one tabbed.
 - Improved formatting jumping speed per formatting.
