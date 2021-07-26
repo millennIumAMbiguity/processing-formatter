@@ -52,8 +52,8 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
             }
         }
         //decrease spacing || remove extra tab
-        if (lineS[_k] === ' ' || lineS[_k] === '\t') { //TODO fin a way to remove multiple spaces at once. p.s. I don't know why I can't get it to work properly
-            edit.push(vscode.TextEdit.delete(f.newRange(line, _k, 0)));
+        if (lineS[_k] === ' ' && !(baseSpacing === 0 && lineS[tabsize] === '}')) { //TODO fin a way to remove multiple spaces at once. p.s. I don't know why I can't get it to work properly
+            edit.push(vscode.TextEdit.delete(f.newRange(line, _k, f.getAmountCharacterRepets(lineS, ' ', _k + 1))));
         }
 
 
@@ -104,8 +104,8 @@ export function spacing(edit: vscode.TextEdit[], line: vscode.TextLine, lineS: s
             }
         }
         if (lineS[_k] === ' ' && !tabReplace) {
-            edit.push(vscode.TextEdit.delete(f.newRange(line, _k, 0)));
-        } else if (lineS[_k] === '\t') {
+            edit.push(vscode.TextEdit.delete(f.newRange(line, _k, f.getAmountCharacterRepets(lineS, ' ', _k + 1))));
+        } else if (lineS[_k] === '\t' && !(baseSpacing === 0 && lineS[1] === '}')) {
             edit.push(vscode.TextEdit.delete(f.newRange(line, _k, 0)));
         }
     }

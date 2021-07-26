@@ -1,6 +1,13 @@
 ### 0.5.0
 - Added inline formatting arguments. 
 
+### 0.4.6
+- Fixed small issue.
+
+### 0.4.5
+- Fixed bug that could appear on the ending brackets one tabbed.
+- Improved formatting jumping speed per formatting.
+
 ### 0.4.4
 - Added support for switch cases without break. #4 (read commit for more detail)
 - Improved spacing formation smoothness for bracketless if, else, for...
