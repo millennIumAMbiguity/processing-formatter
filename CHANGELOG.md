@@ -1,5 +1,6 @@
 ### 0.5.0
 - Added inline formatting arguments. 
+- Updated `README.md`.
 
 ### 0.4.6
 - Fixed small issue.

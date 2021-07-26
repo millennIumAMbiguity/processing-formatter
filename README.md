@@ -30,15 +30,15 @@ Before | After
 Inline formatting arguments are a feature to change how the format formats the code by typing in arguments in comments. Arguments are not case sensitive and will ignore spaces. You can add thes arguments like this: `//[argument 1][argument 2]`
 
 You can enable, disable, and toggle arguments.
-* `[Ignore Argument]` -> disable Argument.
-* `[Apply Argument]` -> enable Argument.
-* `[Argument]` -> toggle Argument.
+* `[Ignore Formatting]` -> disable formatting.
+* `[Apply Formatting]` -> enable formatting.
+* `[Formatting]` -> toggle formatting.
 
 #### Available arguments
 
-* Formatting.
+* <b>Formatting</b>
 Disable or Enable formatting.
 Formatting will also affect spacing.
 
-* Spacing.
+* <b>Spacing</b>
 Disable or Enable spacing.

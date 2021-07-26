@@ -53,8 +53,7 @@ export function getArguments(s: string, ignoreFormatting: boolean, ignoreSpacing
             continue;
         }
         let argument: string = tempArray[0];
-        argument.toLocaleLowerCase();
-        argument = argument.replace(' ', '');
+        argument = argument.toLocaleLowerCase().replace(' ', '');
         switch (argument) {
             case "ignoreformatting":
                 ignoreFormatting = true;
