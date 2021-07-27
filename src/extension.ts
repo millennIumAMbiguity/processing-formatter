@@ -15,26 +15,27 @@ export function activate(context: vscode.ExtensionContext) {
             const config = vscode.workspace.getConfiguration('processing-formatter');
             const editor = vscode.workspace.getConfiguration('editor');
             //get settings
-            const ifAndForSpace = config.get('format.useSpaceAfterIfAndFor');
-            const settingLog = config.get('interface.logChanges');
-            const tabsize = editor.get('tabSize') as number;
-            const insertSpaces = editor.get('insertSpaces') as boolean;
+            let ignoreFormatting = !config.get('format.enableFormatting')      as boolean;
+            let ignoreSpacing    = !config.get('format.enableSpacing')         as boolean;
+            const ifAndForSpace  =  config.get('format.useSpaceAfterIfAndFor') as boolean;
+            const settingLog     =  config.get('interface.logChanges')         as boolean;
+            let tabsize          =  editor.get('tabSize')                      as number;
+            let insertSpaces     =  editor.get('insertSpaces')                 as boolean;
 
-            let edit: vscode.TextEdit[] = [];
-            let curlyBracketsCount: number = 0;
-            let bracketsCount: number = 0;
-            let bracketsTrack: number = -1;
-            let comment: boolean = false;
-            let bracketLessIf: boolean = false;
-            let bracketLessIfs: number = 0;
-            let bracketLessIfBracket: boolean = false;
-            let isStatemnt: boolean = false;
-            let isString: number = 0;
-            let spaceTab: string = ' ';
-            let isInsideACase: boolean = false;
-            let caseBaseSpacing: number = -1;
-            let ignoreSpacing: boolean = false;
-            let ignoreFormatting: boolean = false;
+            let edit:                 vscode.TextEdit[] = [];
+            let curlyBracketsCount:   number            = 0;
+            let bracketsCount:        number            = 0;
+            let bracketsTrack:        number            = -1;
+            let comment:              boolean           = false;
+            let bracketLessIf:        boolean           = false;
+            let bracketLessIfs:       number            = 0;
+            let bracketLessIfBracket: boolean           = false;
+            let isStatemnt:           boolean           = false;
+            let isString:             number            = 0;
+            let spaceTab:             string            = ' ';
+            let isInsideACase:        boolean           = false;
+            let caseBaseSpacing:      number            = -1;
+
 
             for (let i = 1; i < tabsize; i++) {
                 spaceTab += ' ';
@@ -128,9 +129,9 @@ export function activate(context: vscode.ExtensionContext) {
                                     ignoreSpacing = formatingARguments[1];
                                     break;
                                 }
-                            } 
-                            
-                            else if (lineS[_k] === '}' && lineS[_k + 1] !== ' ' && lineS[_k + 1] !== undefined && lineS[_k + 1] !== ';'&& lineS[_k + 1] !== ')') {
+                            }
+
+                            else if (lineS[_k] === '}' && lineS[_k + 1] !== ' ' && lineS[_k + 1] !== undefined && lineS[_k + 1] !== ';' && lineS[_k + 1] !== ')') {
                                 edit.push(vscode.TextEdit.insert(line.range.start.translate(0, _k + 1), ' '));
                             } else if ((lineS[_k] === '(' || lineS[_k] === ',' || lineS[_k] === '=') && lineS[_k + 1] === ' ' && lineS[_k + 2] === '-') { // handle negativ numbers // if ( - 1, - 2) -> if ( -1, -2)
                                 _k += 3;

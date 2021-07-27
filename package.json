@@ -44,6 +44,16 @@
 		"configuration": {
 			"title": "Processing Formatter",
 			"properties": {
+				"processing-formatter.format.enableFormatting": {
+					"type": "boolean",
+					"default": true,
+					"description": "Disable or enable formatting."
+				},
+				"processing-formatter.format.enableSpacing": {
+					"type": "boolean",
+					"default": true,
+					"description": "Disable or enable spacing."
+				},
 				"processing-formatter.format.useSpaceAfterIfAndFor": {
 					"type": "boolean",
 					"default": true,
