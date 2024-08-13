@@ -1,8 +1,8 @@
 # Processing (pde) formatter for VSCode
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
-[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/installs/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
+[![Version](https://vsmarketplacebadges.dev/version-short/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
+[![Downloads](https://vsmarketplacebadges.dev/downloads-short/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
+[![Ratings](https://vsmarketplacebadges.dev/rating-star/millenniumambiguity.processing-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=millenniumambiguity.processing-formatter)
 
 ## Usage
 It uses the Formatting API so use the following command for formating: <br>
